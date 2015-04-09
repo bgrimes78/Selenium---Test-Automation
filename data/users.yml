@@ -1,0 +1,4 @@
+:users:
+ :blank:
+  :email: 'test@tester.com'
+  :password: 'test1234'

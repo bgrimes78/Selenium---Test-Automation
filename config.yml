@@ -1,0 +1,9 @@
+# Spec-helper configuration
+run-headless: false
+run-in-chrome: true
+run-in-safari: false
+run-in-firefox: false
+
+# Browser
+base-url: 'www.google.com'
+keep-browser-open: false
