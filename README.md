@@ -38,6 +38,18 @@ Environment - MacOSX
 
 				gem install nokogiri -v 1.6.3.1
 
+		Capybara - https://rubygems.org/gems/capybara
+
+			gem install capybara
+
+			Info - https://github.com/jnicklas/capybara
+
+		Poltergeist - https://rubygems.org/gems/poltergeist
+
+			gem install poltergeist
+
+			Info - https://github.com/teampoltergeist/poltergeist
+
 		RSpec - https://rubygems.org/gems/rspec
 
 			gem install rspec
