@@ -46,6 +46,10 @@ Environment - MacOSX
 
 		Download, unzip and put in your /usr/bin folder
 
+	SafariDriver - https://lavanyaaraga.wordpress.com/2013/01/19/installation-steps-of-selenium-webdriver-in-mac-safari-browser/
+
+		Follow the steps outlined on this site
+
 	Jenkins - http://jenkins-ci.org/
 
 		Configure System
