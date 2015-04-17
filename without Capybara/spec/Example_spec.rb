@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'PageObjects/ExamplePageObjects'
 
-describe "Desktop Chat" do
+describe "Example" do
   
 	before(:each) do
     	@ex = Example.new(@driver)
@@ -9,7 +9,7 @@ describe "Desktop Chat" do
 
   	it "example" do
   		@ex.visit
-      @ex.example
+        @ex.example
   	end
 
 end
