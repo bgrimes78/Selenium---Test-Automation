@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-class DesktopChat
+class Example
 
 	URL = BaseURL
 
