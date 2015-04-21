@@ -36,114 +36,96 @@ if (ConfigFile["run-headless"])
 
 	RSpec.configure do |config|
 
-	config.before(:all) do
-	  @Capybara = Capybara::Session.new(:poltergeist)
-	  Capybara.default_driver = :poltergeist
+		config.before(:all) do
+	  		@Capybara = Capybara::Session.new(:poltergeist)
+	  		Capybara.default_driver = :poltergeist
+		end
 	end
-	end
-else 
-	if (ConfigFile["run-in-chrome"])
 
-		chrome_switches = %w[--start-fullscreen]
-		caps_opts = {'chrome.switches' => chrome_switches}
-		caps = Selenium::WebDriver::Remote::Capabilities.chrome(caps_opts)
-		opts = {
-		  :browser => :chrome,
-		  :desired_capabilities => caps
+elsif (ConfigFile["run-in-chrome"])
+
+	chrome_switches = %w[--start-fullscreen]
+	caps_opts = {'chrome.switches' => chrome_switches}
+	caps = Selenium::WebDriver::Remote::Capabilities.chrome(caps_opts)
+	opts = {
+		:browser => :chrome,
+		:desired_capabilities => caps
 		}
 
-		Capybara.register_driver :chrome do |app|
-		Capybara::Selenium::Driver.new(
-		  app,
-		  opts
+	Capybara.register_driver :chrome do |app|
+	Capybara::Selenium::Driver.new(
+	  app,
+	  opts
+	)
+	end
+
+	Capybara.javascript_driver = :chrome
+
+	RSpec.configure do |config|
+
+		config.before(:all) do
+	  		@Capybara = Capybara::Session.new(:chrome)
+	  		Capybara.default_driver = :chrome
+		end
+	end
+
+elsif (ConfigFile["run-in-safari"])
+	opts = {
+	  :browser => :selenium
+	}
+	Capybara.register_driver :safari do |app|
+	Capybara::Selenium::Driver.new(
+		app,
+		opts
 		)
-		end
+	end
 
-		Capybara.javascript_driver = :chrome
+	Capybara.javascript_driver = :safari
 
-		RSpec.configure do |config|
-
-		config.before(:all) do
-		  @Capybara = Capybara::Session.new(:chrome)
-		  Capybara.default_driver = :chrome
-		end
-		end
-else 
-	if (ConfigFile["run-in-safari"])
-
-		chrome_switches = %w[--start-fullscreen]
-		caps_opts = {'safari.switches' => safari_switches}
-		caps = Selenium::WebDriver::Remote::Capabilities.safari(caps_opts)
-		opts = {
-		  :browser => :selenium,
-		  :desired_capabilities => caps
-		}
-
-		Capybara.register_driver :selenium do |app|
-  		Capybara::Selenium::Driver.new(app, :browser => :safari, opts)
-
-		# Capybara.register_driver :safari do |app|
-		# Capybara::Selenium::Driver.new(
-		#   app,
-		#   opts
-		# )
-		end
-		Capybara.javascript_driver = :safari
-
-		RSpec.configure do |config|
+	RSpec.configure do |config|
 
 		config.before(:all) do
-		  @Capybara = Capybara::Session.new(:safari)
-		  Capybara.default_driver = :safari
+	  		@Capybara = Capybara::Session.new(:safari)
+	  		Capybara.default_driver = :safari
+		end
+	end
 
+elsif (ConfigFile["run-in-firefox"])
+
+	chrome_switches = %w[--start-fullscreen]
+	caps_opts = {'firefox.switches' => firefox_switches}
+	caps = Selenium::WebDriver::Remote::Capabilities.firefox(caps_opts)
+	opts = {
+	  :browser => :firefox,
+	  :desired_capabilities => caps
+	}
+
+	Capybara.register_driver :firefox do |app|
+	Capybara::Selenium::Driver.new(
+	  app,
+	  opts
+	)
+	end
+	Capybara.javascript_driver = :firefox
+
+	RSpec.configure do |config|
+
+		config.before(:all) do
+	  		@Capybara = Capybara::Session.new(:firefox)
+	  		Capybara.default_driver = :firefox
+		end
+	end
 end
-		end
-		end
-else 
-	if (ConfigFile["run-in-firefox"])
 
-		chrome_switches = %w[--start-fullscreen]
-		caps_opts = {'firefox.switches' => firefox_switches}
-		caps = Selenium::WebDriver::Remote::Capabilities.firefox(caps_opts)
-		opts = {
-		  :browser => :firefox,
-		  :desired_capabilities => caps
-		}
-
-		Capybara.register_driver :firefox do |app|
-		Capybara::Selenium::Driver.new(
-		  app,
-		  opts
-		)
-		end
-		Capybara.javascript_driver = :firefox
-
-		RSpec.configure do |config|
-
-		config.before(:all) do
-		  @Capybara = Capybara::Session.new(:firefox)
-		  Capybara.default_driver = :firefox
-		end
-		end
-	else 
-		RSpec.configure do |config|
-			config.before(:all) do
-			  @Capybara = Capybara::Session.new(:selenium)
-			  Capybara.default_driver = :selenium
-			end
-		end
-	end
-
-	if (ConfigFile["keep-browser-open"]) 
-		Capybara::Selenium::Driver.class_eval do
-		  def quit
-		    puts "Press RETURN to quit the browser"
-		    $stdin.gets
-		    @browser.quit
-		  rescue Errno::ECONNREFUSED
-		    # Browser must have already gone
-		  end
-		end
+if (ConfigFile["keep-browser-open"]) 
+	Capybara::Selenium::Driver.class_eval do
+	  def quit
+	    puts "Press RETURN to quit the browser"
+	    $stdin.gets
+	    @browser.quit
+	  rescue Errno::ECONNREFUSED
+	    # Browser must have already gone
+	  end
 	end
 end
 
