@@ -75,15 +75,18 @@ else
 		caps_opts = {'safari.switches' => safari_switches}
 		caps = Selenium::WebDriver::Remote::Capabilities.safari(caps_opts)
 		opts = {
-		  :browser => :safari,
+		  :browser => :selenium,
 		  :desired_capabilities => caps
 		}
 
-		Capybara.register_driver :safari do |app|
-		Capybara::Selenium::Driver.new(
-		  app,
-		  opts
-		)
+		Capybara.register_driver :selenium do |app|
+  		Capybara::Selenium::Driver.new(app, :browser => :safari, opts)
+
+		# Capybara.register_driver :safari do |app|
+		# Capybara::Selenium::Driver.new(
+		#   app,
+		#   opts
+		# )
 		end
 		Capybara.javascript_driver = :safari
 
@@ -92,6 +95,8 @@ else
 		config.before(:all) do
 		  @Capybara = Capybara::Session.new(:safari)
 		  Capybara.default_driver = :safari
+
+end
 		end
 		end
 else 
